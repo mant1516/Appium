@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="Automation_Project">
+	<property environment="env"/>
+	<property name="ECLIPSE_HOME" value="../../eclipse-jee-mars-1-win32-x86_64/eclipse/"/>
+	<property name="debuglevel" value="source,lines,vars"/>
+	<property name="target" value="1.7"/>
+	<property name="source" value="1.7"/>
+	<!-- ========== Initialize Properties =================================== -->
+	<!-- set global properties for build -->
+	<property file="build.properties"/>
+	<property name="basedir" value="." />
+	<property name="lib" value="${basedir}/lib" />
+	<property name="src" value="${basedir}/src" />
+	<property name="src-test" value="${basedir}/src-test" />
+	<property name="bin" value="${basedir}/bin" />
+	<property name="report-dir" value="${basedir}/Test-Report" />
+	<property name="testng-report-dir" value="${report-dir}/TestNGreport" />
+	
+	<path id="Automation_Project.classpath">
+		<pathelement location="bin"/>
+		<pathelement location="lib/selenium-server-standalone-2.48.2.jar"/>
+		<pathelement location="lib/mysql507.jar"/>
+	</path>
+
+	<target name="init">
+		<mkdir dir="bin"/>
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src">
+				<exclude name="**/*.launch"/>
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src-test">
+				<exclude name="**/*.launch"/>
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="bin"/>
+	</target>
+	<target depends="clean" name="cleanall"/>
+	<target depends="build-subprojects,build-project" name="build"/>
+	<target name="build-subprojects"/>
+	<target depends="init" name="build-project">
+		<echo message="${ant.project.name}: ${ant.file}"/>
+		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src"/>
+			<src path="src-test"/>
+			<classpath refid="Automation_Project.classpath"/>
+		</javac>
+	</target>
+	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+		<copy todir="${ant.library.dir}">
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+		</copy>
+		<unzip dest="${ant.library.dir}">
+			<patternset includes="jdtCompilerAdapter.jar"/>
+			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+		</unzip>
+	</target>
+	<target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+		<antcall target="build"/>
+	</target>
+
+	<!-- ====== Set the classpath ====  -->
+	<path id="classpath">
+		<pathelement location="${bin}" />
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Delete directories  -->
+	<target name="delete-dir" depends="build">
+		<delete dir="${bin}" />
+		<delete dir="${report-dir}" />
+	</target>
+	<!-- Creating directories -->
+	<target name="create" depends="delete-dir">
+		<mkdir dir="${bin}" />
+		<mkdir dir="${report-dir}" />
+	</target>
+
+	<!-- Compile the java code from ${src} into ${bin} -->
+	<target name="compile" depends="create">
+		<javac srcdir="${src}" classpathref="classpath" includeAntRuntime="No" destdir="${bin}" />
+		<javac srcdir="${src-test}" classpathref="classpath" includeAntRuntime="No" destdir="${bin}" />
+		<echo> /* Compiled Directory Classes */ </echo>
+	</target>
+
+	<!-- Runs the file and generates Reportng report for TestNG-->
+	<taskdef name="testng" classname="org.testng.TestNGAntTask" classpathref="classpath" />
+
+	<target name="Web-testng-execution" depends="compile,ConfigurationAllTarget">
+		<mkdir dir="${testng-report-dir}" />
+		<testng outputdir="${testng-report-dir}" classpathref="classpath" useDefaultListeners="true">
+			<xmlfileset dir="${basedir}" includes="TestngXML.xml" />
+		</testng>
+	</target>
+
+	<target name="ConfigurationAllTarget">
+		<replaceregexp file="${config.dir}/AutomationInputs.properties"
+										 match="(^SEMSuiteName[ ]*=[ ]*).*"
+										 replace="\1${SEMSuiteName}" byline="true"/>
+		<replaceregexp file="${config.dir}/AutomationInputs.properties"
+								 match="(^database.username[ ]*=[ ]*).*"
+								 replace="\1${database.username}" byline="true"/>
+		<replaceregexp file="${config.dir}/AutomationInputs.properties"
+								 match="(^database.password[ ]*=[ ]*).*"
+								 replace="\1${database.password}" byline="true"/>
+		<replaceregexp file="${config.dir}/AutomationInputs.properties"
+								 match="(^database.connection.url[ ]*=[ ]*).*"
+								 replace="\1${database.connection.url}" byline="true"/>
+		<replaceregexp file="${config.dir}/AutomationInputs.properties"
+								 match="(^database.connection.driverclass[ ]*=[ ]*).*"
+								 replace="\1${database.connection.driverclass}" byline="true"/>
+		<replaceregexp file="${config.dir}/AutomationInputs.properties"
+											 match="(^Browser[ ]*=[ ]*).*"
+											 replace="\1${Browser}" byline="true"/>
+	</target>
+	
+	<target name="Mobile-testng-execution" depends="compile,ConfigurationAllTarget">
+		<mkdir dir="${testng-report-dir}" />
+		<testng outputdir="${testng-report-dir}" classpathref="classpath" useDefaultListeners="true">
+			<xmlfileset dir="${basedir}" includes="MobileTestL.xml" />
+		</testng>
+	</target>
+</project>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://mobileWeb.Mobile_org/testng-1.0.dtd">
+<suite name="Default suite" verbose="1" >
+  <test verbose="2" name="Regression suite 1">
+    <classes>
+      <class name="mobileWeb.Mobile_HousejoyAppliancesPageTest_1"/>
+      <class name="mobileWeb.Mobile_HousejoyAppliancesPageTest_2"/>
+      <class name="mobileWeb.Mobile_HousejoyAppliancesPageTest_acRepair"/>      
+	  <class name="mobileWeb.Mobile_HousejoyAppliancesPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest_1" />	  
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest_10"/>
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest_13"/>
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest_14" />
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest_17" />
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest_9" />
+	  <class name="mobileWeb.Mobile_HousejoyBeautyPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyCarpentryPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyComputerRepairPageTest_laptopRepair_1"/> 
+	  <class name="mobileWeb.Mobile_HousejoyComputerRepairPageTest_laptopRepair"/>
+	  <class name="mobileWeb.Mobile_HousejoyComputerRepairPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyElectricalPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyFitnessPageTest_1"/>
+	  <class name="mobileWeb.Mobile_HousejoyFitnessPageTest_4"/>
+	  <class name="mobileWeb.Mobile_HousejoyFitnessPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyHomeCleaningPageTest_1"/>
+	  <class name="mobileWeb.Mobile_HousejoyHomeCleaningPageTest"/>
+	  <class name="mobileWeb.Mobile_HousejoyLaundryPageTest_2"/>
+	  <class name="mobileWeb.Mobile_HousejoyMobileRepairPageTest_1"/> 
+	  <class name="mobileWeb.Mobile_HousejoyMobileRepairPageTest"/>
+	  <!-- <class name="mobileWeb.Mobile_HousejoyPestControlPageTest"/> -->
+      <class name="mobileWeb.Mobile_HousejoyPlumbingPageTest_6"/>
+	  <class name="mobileWeb.Mobile_HousejoyServiceLaptopRepairPageTest"/>
+    </classes>
+  </test> <!-- Default test -->
+</suite> <!-- Default suite -->
